@@ -1,7 +1,7 @@
-//Criação do elemento square que irá compor o tabuleiro
 import './App.css';
 import { useState } from 'react';
 
+//Criação do elemento square que irá compor o tabuleiro
 function Square({valor, onSquareClick}){
   return(
     <button className='square' onClick={onSquareClick}>
@@ -12,11 +12,24 @@ function Square({valor, onSquareClick}){
 
 export default function Tabuleiro(){
   const[squares, setSquares] = useState(Array(9).fill(null));
+  const[xIsNext, setXIsNext] = useState(true);
 
   function handleClick(i){
+    // Se squares de i é null o if não executa o return.
+    if (squares[i]){
+      return;
+    }
+    // O handleClick continua a execução pois o return não
+    // foi executado o squares[i] era null.
     const nextSquares = squares.slice();
-    nextSquares[i] = "x";
+    if (xIsNext){
+      nextSquares[i] = "x";
+    } 
+    else {
+      nextSquares[i] = "o";
+    }
     setSquares(nextSquares);
+    setXIsNext(!xIsNext);
   }
 
   return(
